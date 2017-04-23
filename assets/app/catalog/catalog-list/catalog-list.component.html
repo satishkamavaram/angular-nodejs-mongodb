@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn btn-primary" (click)="addNewCatalog()">Add Catalog</div>
+  </div>
+</div>
+<hr>
+<div class="row" >
+  <div class="col-md-12" >
+    <input type="text" class="rounded" placeholder="  Search Catalog using Pipes"
+    [(ngModel)]="search" >
+   </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <app-catalog-item *ngFor="let item of catalogs | searchPipe:search:'name':'desc'; let i = index "
+     [citem]="item"
+     [cindex] = "i"
+    ></app-catalog-item>
+  </div>
+</div>

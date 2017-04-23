@@ -1,0 +1,13 @@
+.rounded {
+  border-radius: 20px;
+  background: white;
+  border : 2px solid SteelBlue;
+  height:40px;
+  width:200px;
+}
+
+.rounded:hover{border:2px solid red;}
+.rounded:focus{
+  border:2px solid DarkMagenta;
+  outline:none;
+}
