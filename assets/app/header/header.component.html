@@ -8,16 +8,22 @@
         <ul class="nav navbar-nav">
         <!--  <li><a href="#" (click)="onClickNavHeader(1)">Catalog</a></li>
           <li><a href="#" (click)="onClickNavHeader(2)">Shopping</a></li>-->
-          <li routerLinkActive="active"><a style ="cursor:pointer;" (click)="catalog()" >Catalog</a></li>
+          <li routerLinkActive="active"><a style ="cursor:pointer;" routerLink="/catalog" >Catalog</a></li>
           <li routerLinkActive="active"><a style ="cursor:pointer;" routerLink="/shopping" >Shopping</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <!--<ul class="nav navbar-nav navbar-right">
           <li class="dropdown" appDropdown>
             <a style ="cursor:pointer;" class="dropdown-toggle" role="button">Manage<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li> <a style ="cursor:pointer;">Save Data</a></li>
               <li><a style ="cursor:pointer;">Fetch Data</a></li>
             </ul>
+          </li>
+        </ul>-->
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a style ="cursor:pointer;"
+             (click)="logout()">Logout</a>
           </li>
         </ul>
     </div>
