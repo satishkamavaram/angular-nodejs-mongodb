@@ -9,3 +9,6 @@
 
 ## Dependencies
 #### node,npm
+
+## Access from Browser
+#### http://localhost:3000
