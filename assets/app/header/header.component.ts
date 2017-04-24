@@ -2,6 +2,10 @@ import {Component,Output,EventEmitter} from '@angular/core';
 import {Catalog} from '../catalog/catalog.model';
 import {CatalogService} from '../catalog/catalog.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { AuthService } from "./../login/auth.service";
+
+
 @Component({
   selector : 'app-header',
   templateUrl : './header.component.html',
@@ -19,16 +23,25 @@ export class HeaderComponent {
 
 
    constructor(private catalogService : CatalogService,private route: ActivatedRoute,
-     private router: Router) {
+     private router: Router,private authService: AuthService) {
 
    }
 
    ngOnInit() {
      this.catalogs = this.catalogService.getCatalogs();
-     this.catalog();
+  //   this.catalog();
    }
 
  catalog(){
    this.router.navigate((this.catalogs.length==0)?["catalog"]:["catalog","0"],{relativeTo:this.route});
-}
+ }
+
+ logout(){
+     this.authService.logout();
+     this.router.navigate(["/login"]);
+ }
+
+ loggedIn(){
+     return this.authService.isLoggedIn()
+ }
 }

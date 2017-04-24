@@ -18,6 +18,10 @@ import {CatalogService} from './catalog/catalog.service';
 import {AppRoutingModule } from './app-routing.module';
 import { CatalogEditComponent } from './catalog/catalog-edit/catalog-edit.component';
 import { SearchPipePipe } from './catalog/search-pipe.pipe';
+import { SignInComponent } from './login/signin/signin.component';
+import { SignUpComponent } from './login/signup/signup.component';
+import {AuthService} from './login/auth.service';
+import {AuthGaurdService} from './login/auth.guard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,8 @@ import { SearchPipePipe } from './catalog/search-pipe.pipe';
     CatalogDetailComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
+    SignInComponent,
+    SignUpComponent,
     AppDropDownDirective,
     CatalogEditComponent,
     SearchPipePipe
@@ -40,7 +46,9 @@ import { SearchPipePipe } from './catalog/search-pipe.pipe';
     ReactiveFormsModule
   ],
   //  providers : [CatalogService]
-  providers: [ShoppingService,CatalogService],
+  providers: [ShoppingService,
+             CatalogService,
+             AuthService,AuthGaurdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

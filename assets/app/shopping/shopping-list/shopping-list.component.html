@@ -1,7 +1,7 @@
 <app-shopping-edit>
     <div class="row">
       <div class="col-md-7">
-        <ul class="list-group">
+        <ul class="list-group" *ngIf="shoppingItems">
           <li class="list-group-item" *ngFor="let item of shoppingItems;let i  = index"
           (click)="OnEdit(i)" style="cursor:pointer;">{{item.name}}
           <span class="badge" style="background-color: #398439;"> {{item.amount}}</span></li>

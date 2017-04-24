@@ -4,17 +4,23 @@ import { ShoppingListComponent } from './shopping/shopping-list/shopping-list.co
 import { RouterModule,Routes } from  '@angular/router'
 import { CatalogDetailComponent } from './catalog/catalog-detail/catalog-detail.component';
 import { CatalogEditComponent } from './catalog/catalog-edit/catalog-edit.component';
-const appRoutes  : Routes = [
+import { SignInComponent } from './login/signin/signin.component';
+import { SignUpComponent } from './login/signup/signup.component';
+import {AuthGaurdService} from './login/auth.guard.service';
 
-  { path: 'catalog', component: CatalogComponent ,
+const appRoutes  : Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'login', component: SignInComponent },
+  { path: 'signup', component: SignUpComponent },
+  { path: 'catalog', canActivate:[AuthGaurdService], component: CatalogComponent,
     children : [
     {  path: 'new', component : CatalogEditComponent},
     {  path: ':id', component : CatalogDetailComponent},
     {  path: ':id/edit', component : CatalogEditComponent}
   ]},
-  { path: 'shopping', component: ShoppingListComponent },
-  { path: '', redirectTo: 'catalog', pathMatch: 'full'}
+  { path: 'shopping', canActivate:[AuthGaurdService],component: ShoppingListComponent }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

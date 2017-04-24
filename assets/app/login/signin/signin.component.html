@@ -1,0 +1,54 @@
+<div class="container container-table">
+    <div class="row vertical-center-row">
+      <div class="col-md-4 col-md-offset-4">
+       <form [formGroup]="signinForm" (ngSubmit)="OnSubmit()">
+         <div class="form-group" *ngIf="errorMessage">
+           <p  class="form-control"
+           [ngStyle]="{'color' :'red'}"
+           style="border:0px">
+             {{errorMessage}}
+             <a *ngIf="signUpSuccess" (click)="SignIn()">Sign In</a>
+           </p>
+         </div>
+         <div class="form-group">
+           <label for="email">Email</label>
+           <input type="text"
+           class="form-control"
+            id="email"
+            placeholder="Email"
+            formControlName="email">
+            <p *ngIf="!signinForm.get('email').valid && signinForm.get('email').touched"
+           style="color:red">
+            <span *ngIf="signinForm.get('email').errors?.required">
+             Email field is required</span>
+             <span *ngIf="!signinForm.get('email').errors?.required &&
+             signinForm.get('email').errors?.email">
+              Email is invalid</span>
+           </p>
+         </div>
+         <div class="form-group">
+           <label for="pwd">Password</label>
+           <input type="password"
+           class="form-control"
+            id="pwd"
+            placeholder="Password"
+            formControlName="pwd">
+            <p *ngIf="!signinForm.get('pwd').valid && signinForm.get('pwd').touched"
+           style="color:red">
+            <span *ngIf="signinForm.get('pwd').errors?.required">
+             Password field is required</span>
+             </p>
+         </div>
+         <button type="submit"
+         class="btn btn-primary"
+         [disabled]="signinForm.invalid && signinForm.touched ">Login</button>
+       <hr>
+       <div class="row">
+         <div class="col-md-4 col-md-offset-4">
+           <a (click)="SignUp()">Sign Up</a>
+         </div>
+       </div>
+       </form>
+       </div>
+    </div>
+</div>

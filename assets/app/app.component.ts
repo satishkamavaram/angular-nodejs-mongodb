@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 
+import { AuthService } from "./login/auth.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private authService: AuthService){
+
+}
   /*  navHeaderValue = 1;
 
   onNavHeaderChange(navHeaderValue : number) {
@@ -25,4 +29,7 @@ export class AppComponent {
     }
     return false;
   }*/
+  loggedIn(){
+      return this.authService.isLoggedIn()
+  }
 }

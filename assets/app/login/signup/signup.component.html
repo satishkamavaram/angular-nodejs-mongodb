@@ -1,0 +1,82 @@
+<div class="container container-table">
+    <div class="row vertical-center-row">
+      <div class="col-md-4 col-md-offset-4">
+       <form [formGroup]="signupForm" (ngSubmit)="OnSubmit()">
+         <div class="form-group" *ngIf="statusMessage">
+           <p  class="form-control"
+           [ngStyle]="{'color' : (signUpSuccess?'green':'red')}"
+           style="border:0px">
+             {{statusMessage}}
+             <a *ngIf="signUpSuccess" (click)="SignIn()">Sign In</a>
+           </p>
+         </div>
+         <div class="form-group">
+           <label for="firstname">First Name</label>
+           <input type="text" class="form-control"
+           id="firstname"
+           placeholder="First Name"
+           formControlName="fname">
+           <p *ngIf="!signupForm.get('fname').valid && signupForm.get('fname').touched"
+           style="color:red">
+          <span *ngIf="signupForm.get('fname').errors?.required">
+           First Name field is required</span>
+         </p>
+         </div>
+         <div class="form-group">
+           <label for="lastname">Last Name</label>
+           <input type="text" class="form-control"
+           id="lastname"
+           placeholder="Last Name"
+           formControlName="lname">
+           <p *ngIf="!signupForm.get('lname').valid && signupForm.get('lname').touched"
+           style="color:red">
+          <span *ngIf="signupForm.get('lname').errors?.required">
+           Last Name field is required</span>
+         </p>
+         </div>
+         <div class="form-group">
+           <label for="email">Email</label>
+           <input type="text"
+           class="form-control"
+            id="email"
+            placeholder="Email"
+            formControlName="email">
+            <p *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched"
+           style="color:red">
+            <span *ngIf="signupForm.get('email').errors?.required">
+             Email field is required</span>
+             <span *ngIf="!signupForm.get('email').errors?.required &&
+             signupForm.get('email').errors?.email">
+              Email is invalid</span>
+           </p>
+         </div>
+         <div class="form-group">
+           <label for="pwd">Password</label>
+           <input type="password"
+           class="form-control"
+            id="pwd"
+            placeholder="Password"
+            formControlName="pwd">
+
+            <p *ngIf="!signupForm.get('pwd').valid && signupForm.get('pwd').touched"
+           style="color:red">
+            <span *ngIf="signupForm.get('pwd').errors?.required">
+             Password field is required</span>
+             </p>
+         </div>
+         <button type="submit"
+         class="btn btn-primary"
+         [disabled]="signupForm.touched && signupForm.invalid">Sign Up</button>
+         <button type="button"
+         class="btn btn-primary"
+         (click)="clearForm()">Clear</button>
+         <hr>
+         <div class="row">
+           <div class="col-md-4 col-md-offset-4">
+             <a (click)="SignIn()">Sign In</a>
+           </div>
+         </div>
+       </form>
+       </div>
+    </div>
+</div>

@@ -16,9 +16,11 @@ export class ShoppingEditComponent implements OnInit ,OnDestroy{
 
   @ViewChild('shoppingForm') shoppingForm : NgForm;
   shoppingEditSubscription : Subscription;
+  shoppingStatusMsgSubscription : Subscription;
   editMode : boolean  =  false;
   editIndex : number  ;
   editShoppingItem : ShoppingItem;
+  message : string;
 
   constructor(private shoppingService:ShoppingService) { }
 
@@ -28,12 +30,20 @@ export class ShoppingEditComponent implements OnInit ,OnDestroy{
        this.editMode  =  true;
        this.editIndex  = index;
        this.editShoppingItem = this.shoppingService.getShoppingItem(index);
+        this.message = '';
        this.shoppingForm.setValue({
            name : this.editShoppingItem.name,
            amount : this.editShoppingItem.amount
        });
       }
     );
+
+    this.shoppingStatusMsgSubscription =  this.shoppingService.shoppingItemMessage.subscribe(
+       (message : string) => {
+         this.message = message;
+       }
+     );
+
   }
 
   onSubmit() {
@@ -58,11 +68,13 @@ export class ShoppingEditComponent implements OnInit ,OnDestroy{
   OnClear(){
     this.shoppingForm.reset();
     this.editMode  =  false;
+    this.message =  '';
   }
 
   ngOnDestroy()
   {
     this.shoppingEditSubscription.unsubscribe();
+    this.shoppingStatusMsgSubscription.unsubscribe();
   }
 
 }
