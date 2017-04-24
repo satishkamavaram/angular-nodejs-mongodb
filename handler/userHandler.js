@@ -2,6 +2,7 @@ var userModel  = require('../models/user');
 var util  = require('../util/util');
 
 var createUser  = function(req,res,next) {
+  //Body - { email: 'test1@test.com',pwd: 'test',fname: 'test',lname: 'test' }
   console.log(req.body);
    var hashPwd  =  util.hashValue(req.body.pwd);
    console.log(hashPwd);
@@ -16,7 +17,8 @@ var createUser  = function(req,res,next) {
 }
 
 var signinUser = function(req,res,next) {
-
+  console.log(req.body);
+  //Body - { email: 'satishkamavaram@gmail.com', pwd: 'test123' }
     userModel.findOne(
       {email : req.body.email},
       (err,user)=> {

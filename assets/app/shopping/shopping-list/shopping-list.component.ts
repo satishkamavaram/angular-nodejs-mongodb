@@ -13,7 +13,7 @@ export class ShoppingListComponent implements OnInit {
   constructor(private shoppingService:ShoppingService) { }
 
   ngOnInit() {
-    this.shoppingItems =  this.shoppingService.getShoppingItems();
+    this.shoppingService.getShoppingItems();
     this.shoppingService.newShoppingItem.subscribe(
        (items :  ShoppingItem[]) => {
          this.shoppingItems = items;

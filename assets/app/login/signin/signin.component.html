@@ -2,6 +2,14 @@
     <div class="row vertical-center-row">
       <div class="col-md-4 col-md-offset-4">
        <form [formGroup]="signinForm" (ngSubmit)="OnSubmit()">
+         <div class="form-group" *ngIf="errorMessage">
+           <p  class="form-control"
+           [ngStyle]="{'color' :'red'}"
+           style="border:0px">
+             {{errorMessage}}
+             <a *ngIf="signUpSuccess" (click)="SignIn()">Sign In</a>
+           </p>
+         </div>
          <div class="form-group">
            <label for="email">Email</label>
            <input type="text"

@@ -8,8 +8,6 @@ var hash  = (value) => {
 };
 
 var compareHash  = (inputPlainPwd,hashedDBPwd)=> {
-  console.log(inputPlainPwd);
-  console.log(hashedDBPwd);
   var cstatus = bcrypt.compareSync(inputPlainPwd, hashedDBPwd);
   return cstatus;
 };
@@ -17,21 +15,35 @@ var compareHash  = (inputPlainPwd,hashedDBPwd)=> {
 const secret =  'mysecret';
 
 var getToken  =  (user)=> {
-  return jwt.sign({user:user},secret,{expiresIn:7200});
+  return jwt.sign({user:user},secret,{expiresIn:7200}); //expiry time in seconds
 };
 
 var getDecodedToken  =  (requestToken)=> {
    jwt.verify(requestToken,secret,(err,decoded) => {
+     console.log('verify token');
+     console.log(err);
+     console.log(decoded);
+     console.log('verified token');
         if(err)
-           return err;
+           return '';
         return decoded;
    });
 };
+
+var getSecret = () => {
+    return secret;
+};
+var getTokenFromQuery  =  (requestToken)=> {
+   return jwt.decode(requestToken);
+};
+
 
 
 module.exports  =  {
     hashValue : hash,
     compare:compareHash,
     getToken : getToken,
-    getDecodedToken : getDecodedToken
+    getDecodedToken : getDecodedToken,
+    getTokenFromQuery : getTokenFromQuery,
+    getSecret : getSecret
 }

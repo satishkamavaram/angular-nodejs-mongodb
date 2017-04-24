@@ -13,8 +13,8 @@ import { AuthService } from "./../auth.service";
 })
 export class SignInComponent implements OnInit{
 
- signinForm : FormGroup
-
+ signinForm : FormGroup;
+ errorMessage : string;
  constructor(private route: ActivatedRoute,
    private router: Router,
  private authService: AuthService) {
@@ -44,17 +44,17 @@ export class SignInComponent implements OnInit{
             .subscribe(
                 data => {
                   console.log(data);
+                  this.errorMessage = '';
                   localStorage.setItem('token',data.token);
                   localStorage.setItem('userId',data.userId);
                   this.router.navigate(["/catalog"]);
+                  this.signinForm.reset();
                 },
                 error =>  {
                   console.log(error);
-
+                  this.errorMessage = error.title;
                 }
             );
-        this.signinForm.reset();
-
       }
     }
 
