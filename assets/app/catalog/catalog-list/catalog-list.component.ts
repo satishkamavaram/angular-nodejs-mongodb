@@ -19,7 +19,7 @@ export class CatalogListComponent implements OnInit ,OnDestroy{
   }
 
   ngOnInit() {
-    this.catalogs = this.catalogService.getCatalogs();
+    this.catalogService.getCatalogs();
     this.catalogChangedSubscription = this.catalogService.catalogChanged.subscribe(
       (catalogs : Catalog[]) =>{
         this.catalogs = catalogs;
@@ -28,7 +28,8 @@ export class CatalogListComponent implements OnInit ,OnDestroy{
   }
 
 addNewCatalog(){
-  this.router.navigate(["new"],{relativeTo:this.route});
+//  this.router.navigate(["new"],{relativeTo:this.route});
+  this.router.navigate(["catalog","new"]);
 }
 
 ngOnDestroy() {

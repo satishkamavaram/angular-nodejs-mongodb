@@ -52,7 +52,6 @@ constructor(private http: Http) {}
   addShoppingItem(item :ShoppingItem) {
     //this.shoppingItems.push(item);
     //this.newShoppingItem.emit(this.shoppingItems.slice());
-    console.log('sdfsd');
     let shoppingItem : ShoppingItem[] =[];
     shoppingItem.push(item);
     this.addItemsInServer(shoppingItem)

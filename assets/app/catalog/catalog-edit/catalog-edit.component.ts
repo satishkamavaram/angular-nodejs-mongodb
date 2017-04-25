@@ -1,30 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import  {FormGroup,FormControl,Validators,FormArray} from  '@angular/forms';
 
 import {CatalogService} from './../catalog.service';
 import {Catalog} from '../catalog.model';
+import {Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-catalog-edit',
   templateUrl: './catalog-edit.component.html',
   styleUrls: ['./catalog-edit.component.css']
 })
-export class CatalogEditComponent implements OnInit {
+export class CatalogEditComponent implements OnInit ,OnDestroy{
   id: number
   editMode : boolean = false;
   catalogForm : FormGroup;
   imagePath ;
+  message : string;
+  catalogStatusMsgSubscription: Subscription;
+
   constructor(private route: ActivatedRoute,private catalogService:CatalogService,
       private router: Router) { }
 
   ngOnInit() {
+    this.message = '';
     this.route.params
     .subscribe(
       (params: Params) => {
       this.id = +params['id'];
       this.editMode = params['id']!=null;
       this.initForm();
+      }
+    );
+
+    this.catalogStatusMsgSubscription = this.catalogService.catalogMessage
+    .subscribe(
+      (message : string) => {
+        this.message = message;
       }
     );
 
@@ -78,17 +90,24 @@ export class CatalogEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.message = '';
     if(this.editMode) {
       this.catalogService.updateCatalog(this.id,this.catalogForm.value);
     }else {
       this.catalogService.addCatalog(this.catalogForm.value);
+      this.catalogForm.reset();
       }
-      this.router.navigate(["../"],{relativeTo:this.route});
+    //  this.router.navigate(["../"],{relativeTo:this.route});
     console.log(this.catalogForm);
   }
 
   onCancel(){
     this.router.navigate(["../"],{relativeTo:this.route});
+  }
+
+  ngOnDestroy()
+  {
+    this.catalogStatusMsgSubscription.unsubscribe();
   }
 
 }
