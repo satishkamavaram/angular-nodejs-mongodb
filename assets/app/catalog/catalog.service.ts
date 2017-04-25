@@ -79,7 +79,7 @@ addToShoppingCart(items :ShoppingItem[]) {
   }
 
   updateCatalog(index : number,catalog: Catalog){
-  this.catalogs[index] = catalog;
+    this.catalogs[index] = catalog;
     this.catalogChanged.next(this.catalogs.slice());
   }
 

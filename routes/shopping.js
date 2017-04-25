@@ -34,5 +34,5 @@ router.use('/',function(req,res,next){
 
 router.post('/item', shoppingHanlder.addItemToShopping);
 router.get('/', shoppingHanlder.getShoppingList);
-
+router.delete('/item',shoppingHanlder.deleteItemFromShoppingList);
 module.exports = router;

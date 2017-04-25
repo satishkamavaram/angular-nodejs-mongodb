@@ -61,7 +61,32 @@ var getShoppingList = function(req,res,next) {
    })
 }
 
+var deleteItemFromShoppingList  = function(req,res,next) {
+   console.log(req.body);
+   var token  =  util.getTokenFromQuery(req.query.token);
+//query builder
+
+    //{ shoppingList: [ { name: 'skdfl', amount: 1321 } ] }
+    shoppingModel.update({'userId':token.user},
+    {'$pullAll': {
+     'shoppingList': req.body.shoppingList
+    }})
+    .then((doc)=> {
+      return res.status(201).json({
+        msg : 'Shopping Item Successfully Deleted',
+      });
+    })
+    .catch((err)=> {
+      return res.status(500).json({
+        title : 'Error deleting to Shopping',
+        err : err
+      });
+    })
+}
+
+
 module.exports =  {
   addItemToShopping : addToShopping,
-  getShoppingList : getShoppingList
+  getShoppingList : getShoppingList,
+  deleteItemFromShoppingList : deleteItemFromShoppingList
 }

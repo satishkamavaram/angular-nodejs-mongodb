@@ -95,8 +95,23 @@ constructor(private http: Http) {}
   }
 
   deleteShoppingItem(index :number) {
-    this.shoppingItems.splice(index,1);
-    this.newShoppingItem.emit(this.shoppingItems.slice());
+    //this.shoppingItems.splice(index,1);
+    //this.newShoppingItem.emit(this.shoppingItems.slice());
+    let shoppingItem : ShoppingItem[] =[];
+     shoppingItem.push(this.shoppingItems[index]);
+     this.deletItemsInServer(shoppingItem)
+     .subscribe(
+       (data) => {
+         console.log(data);
+         this.shoppingItems.splice(index,1);
+         this.newShoppingItem.emit(this.shoppingItems.slice());
+         this.shoppingItemMessage.next(data.msg);
+       },
+       (error) =>  {
+         console.log(error);
+         this.shoppingItemMessage.next(error.title);
+       }
+     );
   }
 
   addItemsInServer(items :ShoppingItem[]) {
@@ -122,6 +137,32 @@ constructor(private http: Http) {}
              return Observable.throw(error.json())
            });
    }
+
+   deletItemsInServer(items :ShoppingItem[]) {
+        console.log(items);
+        const itemss = JSON.stringify(items);
+        const body  = '{"shoppingList" : '+ itemss+"}";
+     //   console.log(shoppingList);
+       // const body1 = JSON.stringify(shoppingList);
+         console.log(body);
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const token = localStorage.getItem('token')
+           ? '?token=' + localStorage.getItem('token')
+           : '';
+        return this.http.delete('http://localhost:3000/shopping/item'+ token,
+        {headers: headers,
+        body : body})
+            .map((response: Response) => {
+              console.log('response');
+              console.log(response.json());
+              return response.json()
+            })
+            .catch((error: Response) => {
+               console.log('error');
+               console.log(error.json());
+              return Observable.throw(error.json())
+            });
+    }
 
    getItemsInServer() {
         const headers = new Headers({'Content-Type': 'application/json'});
